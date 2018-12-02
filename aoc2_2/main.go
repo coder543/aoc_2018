@@ -47,14 +47,3 @@ func main() {
 	radix.Sort(ids)
 	fmt.Println(findDiffing(ids))
 }
-
-// quick benchmark main for use with Hyperfine
-//
-// func main() {
-// 	ids := readBoxIds()
-// 	for i := 0; i < 25000; i++ {
-// 		ids := append([]string{}, ids...)
-// 		radix.Sort(ids)
-// 		findDiffing(ids)
-// 	}
-// }
