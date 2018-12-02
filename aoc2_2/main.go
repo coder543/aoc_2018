@@ -1,0 +1,47 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"sort"
+)
+
+func readBoxIds() []string {
+	f, _ := os.Open("input")
+	scanner := bufio.NewScanner(f)
+
+	ids := []string{}
+	for scanner.Scan() {
+		id := scanner.Text()
+		ids = append(ids, id)
+	}
+
+	return ids
+}
+
+func findDiffing(ids []string) string {
+
+idLoop:
+	for i := range ids {
+		diffpos := -1
+		for c := range ids[i] {
+			if ids[i][c] != ids[i+1][c] {
+				if diffpos != -1 {
+					continue idLoop
+				}
+				diffpos = c
+			}
+		}
+		if diffpos != -1 {
+			return ids[i][:diffpos] + ids[i][diffpos+1:]
+		}
+	}
+	return ""
+}
+
+func main() {
+	ids := readBoxIds()
+	sort.Strings(ids)
+	fmt.Println(findDiffing(ids))
+}
