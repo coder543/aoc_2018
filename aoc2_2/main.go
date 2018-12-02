@@ -4,7 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
+
+	"github.com/yourbasic/radix"
 )
 
 func readBoxIds() []string {
@@ -37,11 +38,23 @@ idLoop:
 			return ids[i][:diffpos] + ids[i][diffpos+1:]
 		}
 	}
+
 	return ""
 }
 
 func main() {
 	ids := readBoxIds()
-	sort.Strings(ids)
+	radix.Sort(ids)
 	fmt.Println(findDiffing(ids))
 }
+
+// quick benchmark main for use with Hyperfine
+//
+// func main() {
+// 	ids := readBoxIds()
+// 	for i := 0; i < 25000; i++ {
+// 		ids := append([]string{}, ids...)
+// 		radix.Sort(ids)
+// 		findDiffing(ids)
+// 	}
+// }
