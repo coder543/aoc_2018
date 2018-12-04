@@ -10,15 +10,15 @@ def line_to_slot(line):
     return (time, action)
 
 
-slots = [line_to_slot(line) for line in data]
-slots = sorted(slots, key=lambda x: x[0])
-
-
 def zero_hash():
     ret = {}
     for x in range(0, 60):
         ret[x] = 0
     return ret
+
+
+slots = [line_to_slot(line) for line in data]
+slots = sorted(slots, key=lambda x: x[0])
 
 
 guards = {}
@@ -40,17 +40,12 @@ for slot in slots:
     elif 'wakes' in slot[1]:
         for minute in range(asleep_minute, slot[0].minute):
             guards[guard][minute] += 1
-        if guard == 239:
-            print(guards[guard])
-    if guard == 239:
-        print(slot)
 
 most_asleep = -1
 sleepy_guard = None
 for guard, sleep in guards.items():
     total = sum(sleep.values())
     if total > most_asleep:
-        print(guard, total)
         most_asleep = total
         sleepy_guard = (guard, sleep)
 
